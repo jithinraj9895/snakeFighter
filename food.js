@@ -1,10 +1,15 @@
 import { utility } from "./utility.js";
+import { audioEffects } from "./audio.js";
+import { Ballbody } from "./snake.js";
+import { postFx } from "./particle.js";
+
 
 export function spawnFood(gameState) {
     const newFood = {
         x: Math.floor(Math.random() * 60) * 10,
         y: Math.floor(Math.random() * 40) * 10,
-        color : "grey"
+        color : "grey",
+        radius : 15
     };
     gameState.food.push(newFood);
 }
@@ -21,8 +26,9 @@ export function updateFood(gameState) {
 
     gameState.food.forEach(fd => {
         if(utility.distance(fd,snakeHead)<=snakeHead.radius){
-            fd.color = "green";
             gameState.score+=1;
+            postFx.particleEffect(fd);
+            audioEffects.playBeep();
             let snakebody = null;
             if(gameState.score%2==0)
                 snakebody = gameState.createBody("black");
@@ -37,4 +43,7 @@ export function updateFood(gameState) {
         spawnFood(gameState);
     }
 }
+
+
+
 

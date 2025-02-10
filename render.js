@@ -1,3 +1,4 @@
+import { postFx } from "./particle.js";
 import { Ballbody } from "./snake.js";
 import { utility } from "./utility.js";
 
@@ -21,8 +22,9 @@ export function renderGame(ctx, gameState) {
     // Draw snake
     renderSnakeBody(gameState.snakeBody,ctx.canvas,ctx);
     // Draw food
-    renderFood(gameState,ctx);
+    renderObject(gameState.food,ctx);
     // Draw score
+    renderObject(postFx.particles,ctx);
     ctx.fillStyle = "black";
     ctx.fillText(`Score: ${gameState.score}`, 10, 20);
 }
@@ -35,18 +37,18 @@ function renderSnakeBody(SNAKES,canvas,ctx){
     }
 }
 
-function renderFood(gameState,ctx){
-    for(let i = 0;i<gameState.food.length;i++){
+function renderObject(food,ctx){
+    for(let i = 0;i<food.length;i++){
         ctx.beginPath();
-        ctx.arc(gameState.food[i].x, gameState.food[i].y, 15, 0, Math.PI * 2);
-        ctx.strokeStyle = "grey";
+        ctx.arc(food[i].x, food[i].y, 10, 0, Math.PI * 2);
+        ctx.strokeStyle = "black";
         ctx.lineWidth = 0.2;
         ctx.stroke();
         ctx.closePath();
 
         ctx.beginPath();
-        ctx.arc(gameState.food[i].x, gameState.food[i].y, 10, 0, Math.PI * 2);
-        ctx.fillStyle = gameState.food[i].color;
+        ctx.arc(food[i].x, food[i].y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = food[i].color;
         ctx.fill();
         ctx.closePath();
     }

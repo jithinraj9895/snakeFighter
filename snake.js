@@ -1,6 +1,6 @@
 export class Ballbody{
-    x = 0
-    y = 0
+    x = -10
+    y = -10
     constructor(radius,color,lineWidth = 0.2){
         this.radius = radius;
         this.color = color;

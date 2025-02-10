@@ -7,7 +7,10 @@
     <script type="module" src="main.js"></script>
 </head>
 <body>
-    <canvas id="gameCanvas"></canvas>
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <button id="startButton" class="game-button">Game Over</button>
+    </div>
 </body>
 
 <style>
@@ -16,5 +19,19 @@
         display: block; /* Removes extra spacing */
         margin: auto; /* Center the canvas */
     }
+
+    .game-button {
+        display: none;
+        position: absolute;
+        bottom: 10px; /* 10px from bottom */
+        left: 50%;
+        transform: translateX(-50%); /* Center horizontally */
+        padding: 10px 20px;
+        font-size: 10px;
+        background: rgba(0, 0, 255, 0);
+        color: rgb(0, 0, 0);
+        border: none;
+        cursor: pointer;
+  }
 </style>
 </html>
