@@ -55,29 +55,30 @@ function renderObject(food,ctx){
 }
 
 
+export function updateSnakeBodyForAllballs(mouseX, mouseY, BALLS) {
+    let dp = new Array(BALLS.length).fill(null).map(() => ({ x: 0, y: 0 }));
 
-export function updateSnakeBodyForAllballs(mouseX,mouseY,BALLS){
-        const angle = utility.calculateAngle(mouseX, mouseY,BALLS[1]);
-        BALLS[0].x = BALLS[1].x + BALLS[1].radius * Math.cos(angle);
-        BALLS[0].y = BALLS[1].y + BALLS[1].radius * Math.sin(angle);
-        let i = 0,j = 1; //jth ball with be the center and the other moves
-        while(j<BALLS.length){
-            if(utility.distance(BALLS[i],BALLS[j])>BALLS[j].radius){
-                if(i==0){
-                    BALLS[0].x = mouseX;
-                    BALLS[0].y = mouseY;
-                }
-                const dx = BALLS[j].x - BALLS[i].x;
-                const dy = BALLS[j].y - BALLS[i].y;
-                const angle = Math.atan2(dy, dx);
-                // Calculate new position relative to the moving ball to the center
-                BALLS[j].x = BALLS[i].x + BALLS[i].radius * Math.cos(angle);
-                BALLS[j].y = BALLS[i].y + BALLS[i].radius * Math.sin(angle);
-            }
-            i = j;
-            j++;
-        }
-        
+    let smoothVar = 1;
+    // First ball follows the mouse with smoothing
+    BALLS[0].x += (mouseX - BALLS[0].x) * smoothVar;
+    BALLS[0].y += (mouseY - BALLS[0].y) * smoothVar;
+
+    dp[0].x = BALLS[0].x;
+    dp[0].y = BALLS[0].y;
+
+    for (let j = 1; j < BALLS.length; j++) {
+        const dx = BALLS[j - 1].x - BALLS[j].x;
+        const dy = BALLS[j - 1].y - BALLS[j].y;
+        const angle = Math.atan2(dy, dx);
+
+        // Cached new position using DP (smoother transition)
+        dp[j].x = BALLS[j - 1].x - BALLS[j].radius * Math.cos(angle);
+        dp[j].y = BALLS[j - 1].y - BALLS[j].radius * Math.sin(angle);
+
+        // Apply smooth interpolation
+        BALLS[j].x += (dp[j].x - BALLS[j].x) * smoothVar;
+        BALLS[j].y += (dp[j].y - BALLS[j].y) * smoothVar;
+    }
 }
 
 
