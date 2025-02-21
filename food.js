@@ -6,8 +6,8 @@ import { postFx } from "./particle.js";
 
 export function spawnFood(gameState) {
     const newFood = {
-        x: Math.floor(Math.random() * 60) * 10,
-        y: Math.floor(Math.random() * 40) * 10,
+        x: Math.floor(Math.random() * (window.innerWidth-100)/10) * 10,
+        y: Math.floor(Math.random() * (window.innerHeight-100)/10) * 10,
         color : "grey",
         radius : 15
     };

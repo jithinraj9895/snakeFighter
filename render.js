@@ -2,6 +2,7 @@ import { postFx } from "./particle.js";
 import { Ballbody } from "./snake.js";
 import { utility } from "./utility.js";
 
+
 export function initRender(canvas,gameState) {
     canvas.width = window.innerWidth - 50;
     canvas.height = window.innerHeight -50;
@@ -26,6 +27,7 @@ export function renderGame(ctx, gameState) {
     // Draw score
     renderObject(postFx.particles,ctx);
     ctx.fillStyle = "black";
+    ctx.textAlign = "left";
     ctx.fillText(`Score: ${gameState.score}`, 10, 20);
 }
 
@@ -58,7 +60,7 @@ function renderObject(food,ctx){
 export function updateSnakeBodyForAllballs(mouseX, mouseY, BALLS) {
     let dp = new Array(BALLS.length).fill(null).map(() => ({ x: 0, y: 0 }));
 
-    let smoothVar = 1;
+    let smoothVar = 0.2;
     // First ball follows the mouse with smoothing
     BALLS[0].x += (mouseX - BALLS[0].x) * smoothVar;
     BALLS[0].y += (mouseY - BALLS[0].y) * smoothVar;

@@ -9,7 +9,6 @@ import { postFx } from "./particle.js";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-
 const gameState = {
     snakeBody : [],
     food: [],
@@ -29,20 +28,11 @@ function init() {
     requestAnimationFrame(gameLoop);
 }
 
-function gameLoop() {
+function gameLoop(timestamp) {
     if (gameState.isGameOver) {
-        ctx.fillStyle = "red";
-        ctx.textAlign = "center";
-        
-        // Calculate X (centered) and Y (above bottom border)
-        const x = canvas.width / 2;
-        const y = canvas.height - 20; // 20px above bottom border
-        
-        // Draw text
-        ctx.fillText("Game Over !", x, y);
+        starterUI("red","Game Over !");
         return;
     }
-    console.log(gameState.isGameOver);
     trackMouse(canvas,gameState);
     updateSnakeBodyForAllballs(gameState.mouse.x,gameState.mouse.y,gameState.snakeBody);
     updateFood(gameState);
@@ -50,6 +40,22 @@ function gameLoop() {
     checkCollisionWithHead(gameState);
     renderGame(ctx, gameState);
     requestAnimationFrame(gameLoop);
+
+    if (gameState.score <= 8) {
+        starterUI("green","Try Catching the GREY ball using your MOUSE !!!");
+    }
+}
+
+function starterUI(color,text){
+    ctx.fillStyle = color;
+    ctx.textAlign = "center";
+    
+    // Calculate X (centered) and Y (above bottom border)
+    const x = canvas.width / 2;
+    const y = canvas.height - 20; // 20px above bottom border
+    
+    // Draw text
+    ctx.fillText(text, x, y);
 }
 
 init();
