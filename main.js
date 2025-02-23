@@ -41,7 +41,7 @@ function gameLoop(timestamp) {
     renderGame(ctx, gameState);
     requestAnimationFrame(gameLoop);
 
-    if (gameState.score <= 8) {
+    if (gameState.score <= 5) {
         starterUI("green","Try Catching the GREY ball using your MOUSE !!!");
     }
 }
